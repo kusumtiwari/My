@@ -27,7 +27,7 @@ export default function MyApplication() {
             path="/product-page/:itemName"
             element={<ProductPage />}></Route>
           <Route
-            path="/category-page"
+            path="/category-page/:itemName"
             element={<CategoryPage />}></Route>
           <Route
             path="/sub-category/:itemName"

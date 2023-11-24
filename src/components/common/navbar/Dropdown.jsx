@@ -34,16 +34,15 @@ export default function Dropdown({
     setactiveLi(null);
   };
 
-  const handleOnClick = (index) => {
-    if (index === 0) {
-      navigate("/category-page");
-    }
-
+  const handleOnClick = (label) => {
+    const itemName = label.replace(/ /g, "-").toLowerCase();
+    navigate(`/category-page/${itemName}`, { state: { label } });
     if (window.innerWidth > 768) {
       displayFirstDropdown();
     } else {
       displaySmallScreenDropdown();
     }
+    window.scroll(0, 0);
   };
   const dropdownRef = useRef(null);
 
@@ -91,7 +90,7 @@ export default function Dropdown({
             }
           }}
         >
-          <li onClick={() => handleOnClick(index)}>{item.label}</li>
+          <li onClick={() => handleOnClick(item.label)}>{item.label}</li>
           <p onClick={() => displayDropdown(index)}>
             <MdOutlineKeyboardArrowRight className="font-bold my-1" />
           </p>
