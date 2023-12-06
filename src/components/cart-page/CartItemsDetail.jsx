@@ -57,11 +57,12 @@ export default function CartItemsDetail({onCheckBoxClick, onAllSelectionClick}) 
   const [individualChecked, setIndividualChecked] = useState(cartData.map(() => false));
 
   const onSelectAllClick = () => {
-    setselectAllClicked(!selectAllClicked);
     const quantitySum = quantityCounts.reduce((accumulator, currentValue) => accumulator + currentValue, 0);
-    const priceSum = cartData.reduce((accumulator, item) => {
-      return accumulator + item.discountedPrice;
-    }, 0);
+    const priceSummedUpArray = cartData.map((item,index) => {
+      return item.discountedPrice * quantityCounts[index];
+    })
+   const priceSum = priceSummedUpArray.reduce((accumulator,currentValue) => accumulator + currentValue, 0);
+   console.log(priceSummedUpArray);
    const idArray = cartData.map((item) => item.id);
    const allclickedArray = individualChecked.map((item) => {
     if(!selectAllClicked){
@@ -72,7 +73,13 @@ export default function CartItemsDetail({onCheckBoxClick, onAllSelectionClick}) 
     }
    });
    setIndividualChecked(allclickedArray);
-   onAllSelectionClick(quantitySum,priceSum,idArray);
+   if(!selectAllClicked){
+    onAllSelectionClick(quantitySum,priceSum,idArray);
+   }
+   else{
+    onAllSelectionClick(0,0,idArray);
+   }
+   setselectAllClicked(!selectAllClicked);
   };
  
   const { addToWishList } = useContext(UserContext);
@@ -113,7 +120,7 @@ export default function CartItemsDetail({onCheckBoxClick, onAllSelectionClick}) 
   };
   
   return (
-    <div className="overflow-hidden  text-primary-blue">
+    <div className="overflow-hidden text-primary-blue">
       <h1 className="text-2xl font-semibold my-4">Shopping Cart</h1>
       <hr className="border border-gray-300 mt-8" />
       <div className="my-4 flex items-center">
@@ -131,7 +138,7 @@ export default function CartItemsDetail({onCheckBoxClick, onAllSelectionClick}) 
         {cartData.map(
           (item, index) =>
             !removebtns[index] && (
-              <div className="flex h-[25vh] my-4" key={item.id}>
+              <div className="flex  h-[35vh] lg:h-[25vh] my-4" key={item.id}>
                 <input
                   type="checkbox"
                   id={`cartitem-${item.id}`}
@@ -151,10 +158,10 @@ export default function CartItemsDetail({onCheckBoxClick, onAllSelectionClick}) 
                   <img
                     src={item.image}
                     alt="product-image"
-                    className="h-[100%] rounded-md"
+                    className="lg:h-[100%] rounded-md"
                   />
                   <div className="flex-1 ml-2">
-                    <div className="flex justify-between">
+                    <div className="flex justify-between flex-col lg:flex-row">
                       <h1 className="max-w-xs whitespace-pre-line">
                         {item.heading}
                       </h1>
@@ -178,7 +185,7 @@ export default function CartItemsDetail({onCheckBoxClick, onAllSelectionClick}) 
                       <h1 className="text-sm text-gray-500">,Color:</h1>
                       <h1 className="text-sm px-1">{item.color}</h1>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between flex-col lg:flex-row">
                       <div className="flex">
                         <div className="border border-gray-400 rounded">
                           <button
@@ -197,7 +204,7 @@ export default function CartItemsDetail({onCheckBoxClick, onAllSelectionClick}) 
                         </div>
                         <h1 className="mx-2 text-sm text-grey-500">{`Only ${item.quantity} left`}</h1>
                       </div>
-                      <div className="flex text-sm">
+                      <div className="flex text-sm mt-2 lg:mt-0">
                         <div
                           className="flex items-center mr-2 cursor-pointer justify-center"
                           onClick={() => onRemoveBtnClick(index)}

@@ -29,7 +29,7 @@ export default function CartPage(){
     }
     return(
         <div className="mx-20 my-14">
-            <div className="flex">
+            <div className="flex flex-col lg:flex-row">
                 <div className="w-[75%] mr-10">
                 <CartItemsDetail onCheckBoxClick = {onCheckBoxClick} onAllSelectionClick={onAllSelectionClick}/>
                 </div>
