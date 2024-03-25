@@ -2,12 +2,14 @@ import AliceCarousel from "react-alice-carousel";
 import { PrevSlider } from "../navigation/Slider";
 import { NextSlider } from "../navigation/Slider";
 import "react-alice-carousel/lib/alice-carousel.css";
-import { useState , useRef, useContext} from "react";
+import { useState, useRef, useContext } from "react";
 import { IoMdStar } from "react-icons/io";
 import { useNavigate } from "react-router-dom";
-import { MdOutlineKeyboardArrowRight, MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import {
+  MdOutlineKeyboardArrowRight,
+  MdOutlineKeyboardArrowLeft,
+} from "react-icons/md";
 import { UserContext } from "../../../context/Context";
-
 
 const responsive = {
   0: { items: 1 },
@@ -19,11 +21,15 @@ const responsive = {
 // const prevstyle = "left-[-15px] top-[47%]";
 // const nextstyle = "right-[-10px] top-[47%]";
 
-export default function ProductCarousel({ dealsArray, headingText, buttonText}) {
-  const {handleProductPageNavigation} = useContext(UserContext);
+export default function ProductCarousel({
+  dealsArray,
+  headingText,
+  buttonText,
+}) {
+  const { handleProductPageNavigation } = useContext(UserContext);
   const [showPrevbtn, setshowPrevbtn] = useState(false);
   const [showNextbtn, setshowNextbtn] = useState(true);
- const carouselRef = useRef(null);
+  const carouselRef = useRef(null);
   return (
     <div className="font-poppins my-8">
       <div className="flex justify-between">
@@ -40,40 +46,54 @@ export default function ProductCarousel({ dealsArray, headingText, buttonText}) 
           disableDotsControls
           responsive={responsive}
           ref={carouselRef}
-          mouseDragEnabled = {true}
+          mouseDragEnabled={true}
           renderPrevButton={() => {
-              return (
-                <button className={`absolute left-[-15px] top-[25%] mt-7 border rounded shadow-lg bg-white ${showPrevbtn ? '' : 'hidden'}`}>
-                  {<MdOutlineKeyboardArrowLeft className="w-8 h-8 text-center text-black font-thin" />}
-                </button>
-              );
-            }}
-            renderNextButton={() => {
-              return (
-                <button className={`absolute right-[-10px] bottom-[-100px] mt-7 border rounded shadow-lg bg-white ${showNextbtn ? '' : 'hidden'}`}>
-                  {<MdOutlineKeyboardArrowRight className="w-8 h-8 text-center text-black font-thin" />}
-                </button>
-              );
-            }}
-            onSlideChanged={(e) => {
-              if(e.item !== 0){
-                setshowPrevbtn(true);
-              }
-              if(e.item == 0){
-                setshowPrevbtn(false);
-              }
-              if(e.isNextSlideDisabled){
+            return (
+              <button
+                className={`absolute left-[-15px] top-[25%] mt-7 border rounded shadow-lg bg-white ${
+                  showPrevbtn ? "" : "hidden"
+                }`}
+              >
+                {
+                  <MdOutlineKeyboardArrowLeft className="w-8 h-8 text-center text-black font-thin" />
+                }
+              </button>
+            );
+          }}
+          renderNextButton={() => {
+            return (
+              <button
+                className={`absolute right-[-10px] bottom-[-100px] mt-7 border rounded shadow-lg bg-white ${
+                  showNextbtn ? "" : "hidden"
+                }`}
+              >
+                {
+                  <MdOutlineKeyboardArrowRight className="w-8 h-8 text-center text-black font-thin" />
+                }
+              </button>
+            );
+          }}
+          onSlideChanged={(e) => {
+            if (e.item !== 0) {
+              setshowPrevbtn(true);
+            }
+            if (e.item == 0) {
+              setshowPrevbtn(false);
+            }
+            if (e.isNextSlideDisabled) {
               setshowNextbtn(false);
-              }
-              if(!e.isNextSlideDisabled){
-                setshowNextbtn(true);
-              }
-            }}
+            }
+            if (!e.isNextSlideDisabled) {
+              setshowNextbtn(true);
+            }
+          }}
         >
           {dealsArray.map((item, i) => (
             <div
               className="item flex flex-col bg-white rounded mr-2 border border-grey-500 cursor-pointer hover:shadow-3xl h-[55vh] lg:h-[50vh]"
-              onClick={() => handleProductPageNavigation(item.description, item.id)}
+              onClick={() =>
+                handleProductPageNavigation(item.description, item.id)
+              }
               key={i}
             >
               <img
@@ -106,7 +126,6 @@ export default function ProductCarousel({ dealsArray, headingText, buttonText}) 
             </div>
           ))}
         </AliceCarousel>
-    
       </div>
     </div>
   );

@@ -15,7 +15,7 @@ export default function UpperNav () {
   return (
     <>
       <div className="hidden md:flex h-[80px] py-3 px-1 md:px-6 justify-around font-poppins md:sticky top-0 z-50 bg-white">
-        <img src="/logo/navlogo.png" alt="logo" className="cursor-pointer" onClick={onLogoClick}/>
+        <img src="/logo/navlogo.png" alt="logo" className="cursor-pointer"  onClick={onLogoClick}/>
         <div className="relative w-[40%] ">
           <input
             type="text"

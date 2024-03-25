@@ -16,8 +16,6 @@ ReactDOM.createRoot(document.getElementById("root")).render(
     </BrowserRouter>
   </React.StrictMode>
 );
-
-
 const handleClickFunction = (text,index) => {
   const navigate = useNavigate();
   const itemName = text.replace(/ /g, '-');
